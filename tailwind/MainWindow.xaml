@@ -6,7 +6,7 @@
         xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:tailwind"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="{Binding WindowTitle}" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -19,11 +19,12 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <RadioButton x:Name="rdoTail" Margin="4,2,10,2" IsChecked="True" Checked="rdoTail_Checked" GroupName="mode">Tail</RadioButton>
+                <RadioButton x:Name="rdoTail" Margin="4,2,10,2" IsChecked="True" Checked="rdoTail_Checked" GroupName="mode" >Tail</RadioButton>
                 <RadioButton x:Name="rdoHead" Margin="2,2,2,2" Checked="rdoHead_Checked" GroupName="mode">Head</RadioButton>
+                <RadioButton x:Name="rdoCat" Margin="2,2,2,2" Checked="rdoCat_Checked" GroupName="mode">Cat</RadioButton>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <RadioButton x:Name="rdoGrep" Margin="2,2,2,2" Checked="rdoGrep_Checked" GroupName="mode">Grep</RadioButton>
+                <CheckBox x:Name="chkGrep" Margin="2,2,2,2" Checked="chkGrep_Checked" Unchecked="chkGrep_Checked">Grep</CheckBox>
                 <CheckBox x:Name="chkRegex" Margin="2,2,2,2" IsEnabled="False">Regex</CheckBox>
             </StackPanel>
         </Grid>
@@ -35,10 +36,6 @@
             <StackPanel Grid.Column="0" Orientation="Horizontal">
                 <Label Margin="4,2,2,2">Lines:</Label>
                 <TextBox x:Name="txtLines"  TextWrapping="NoWrap"  Text="" Width="120" Margin="2,2,2,2"/>
-                <StackPanel>
-                    <Button x:Name="btnLinesUp" Margin="0,2,0,0" Height="13" Width="15"></Button>
-                    <Button x:Name="btnLinesDown" Height="13"></Button>
-                </StackPanel>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Label Margin="2,2,2,2">Pattern:</Label>

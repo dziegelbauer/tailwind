@@ -1,0 +1,16 @@
+{
+  "profiles": {
+    "tailwind": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\Program Files (x86)\\World of Warcraft\\_retail_\\Logs\\WoWCombatLog-061222_161728.txt\"\r\n--mode tail -l 10"
+    },
+    "Bad filename": {
+      "commandName": "Project",
+      "commandLineArgs": "\"C:\\a.txt\"\r\n-m tail"
+    },
+    "Profile 1": {
+      "commandName": "Project",
+      "commandLineArgs": "--mode tail -l 10"
+    }
+  }
+}
