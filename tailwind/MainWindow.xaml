@@ -19,14 +19,14 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <StackPanel Grid.Column="0" Orientation="Horizontal">
-                <RadioButton x:Name="rdoTail" Margin="4,2,10,2" IsChecked="True" Checked="rdoTail_Checked" GroupName="mode" >Tail</RadioButton>
-                <RadioButton x:Name="rdoHead" Margin="2,2,2,2" Checked="rdoHead_Checked" GroupName="mode">Head</RadioButton>
-                <RadioButton x:Name="rdoCat" Margin="2,2,2,2" Checked="rdoCat_Checked" GroupName="mode">Cat</RadioButton>
+                <RadioButton x:Name="rdoTail" Margin="4,2,10,2" IsChecked="True" Checked="Tail_Checked" GroupName="mode" >Tail</RadioButton>
+                <RadioButton x:Name="rdoHead" Margin="2,2,2,2" Checked="Head_Checked" GroupName="mode">Head</RadioButton>
+                <RadioButton x:Name="rdoCat" Margin="2,2,2,2" Checked="Cat_Checked" GroupName="mode">Cat</RadioButton>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <RadioButton x:Name="rdoNoMatch" Margin="4,2,2,2" IsChecked="True" Checked="rdoNoMatch_Checked" GroupName="match">Mo Matching</RadioButton>
-                <RadioButton x:Name="rdoWildcard" Margin="2,2,2,2" Checked="rdoWildcard_Checked" GroupName="match">Wildcard</RadioButton>
-                <RadioButton x:Name="rdoRegex" Margin="2,2,2,2" Checked="rdoRegex_Checked" GroupName="match">Regex</RadioButton>
+                <RadioButton x:Name="rdoNoMatch" Margin="4,2,2,2" IsChecked="True" Checked="NoMatch_Checked" GroupName="match">Mo Matching</RadioButton>
+                <RadioButton x:Name="rdoWildcard" Margin="2,2,2,2" Checked="Wildcard_Checked" GroupName="match">Wildcard</RadioButton>
+                <RadioButton x:Name="rdoRegex" Margin="2,2,2,2" Checked="Regex_Checked" GroupName="match">Regex</RadioButton>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

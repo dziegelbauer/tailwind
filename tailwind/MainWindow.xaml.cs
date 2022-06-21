@@ -92,22 +92,22 @@ namespace tailwind
             }
         }
 
-        private void rdoWildcard_Checked(object sender, RoutedEventArgs e)
+        private void Wildcard_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
         }
 
-        private void rdoNoMatch_Checked(object sender, RoutedEventArgs e)
+        private void NoMatch_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
         }
 
-        private void rdoRegex_Checked(object sender, RoutedEventArgs e)
+        private void Regex_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
         }
 
-        private void rdoHead_Checked(object sender, RoutedEventArgs e)
+        private void Head_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
@@ -117,7 +117,7 @@ namespace tailwind
             UpdateText();
         }
 
-        private void rdoTail_Checked(object sender, RoutedEventArgs e)
+        private void Tail_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
@@ -127,7 +127,7 @@ namespace tailwind
             UpdateText();
         }
 
-        private void rdoCat_Checked(object sender, RoutedEventArgs e)
+        private void Cat_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
