@@ -56,6 +56,16 @@ namespace tailwind
             patternOption.IsRequired = false;
             rootCommand.AddOption(patternOption);
 
+            var matchOption = new Option<string>("--matchmode")
+                .FromAmong(
+                "wildcard",
+                "regex"
+                );
+            matchOption.SetDefaultValue(String.Empty);
+            matchOption.AddAlias("-M");
+            matchOption.IsRequired = false;
+            rootCommand.AddOption(matchOption);
+
             var Args = rootCommand.Parse(e.Args);
 
             if(Args != null && Args!.Errors.Count < 1)
@@ -74,6 +84,7 @@ namespace tailwind
                         Application.Current.Shutdown();
                     }
                 }
+                
                 var mode = Args.GetValueForOption<string>(modeOption) ?? String.Empty;
                 wnd.Settings.Mode = mode switch
                 {
@@ -88,12 +99,14 @@ namespace tailwind
                 wnd.Settings.LineCount = Args.GetValueForOption<int>(lineOption);
                 wnd.Settings.RefreshTime = Args.GetValueForOption<int>(refreshOption);
                 wnd.Settings.MatchPattern = Args.GetValueForOption<string>(patternOption) ?? String.Empty;
-
-                static T ParseStr<T>(string val) where T : struct
+                
+                var matchmode = Args.GetValueForOption<string>(matchOption) ?? String.Empty;
+                wnd.Settings.MatchMode = matchmode switch
                 {
-                    _ = Enum.TryParse<T>(val, out T m); 
-                    return m; 
-                }
+                    "wildcard" => MatchMode.Wildcard,
+                    "regex" => MatchMode.Regex,
+                    _ => MatchMode.None
+                };
             }
             else
             {

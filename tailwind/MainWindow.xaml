@@ -24,8 +24,9 @@
                 <RadioButton x:Name="rdoCat" Margin="2,2,2,2" Checked="rdoCat_Checked" GroupName="mode">Cat</RadioButton>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <CheckBox x:Name="chkGrep" Margin="2,2,2,2" Checked="chkGrep_Checked" Unchecked="chkGrep_Checked">Grep</CheckBox>
-                <CheckBox x:Name="chkRegex" Margin="2,2,2,2" IsEnabled="False">Regex</CheckBox>
+                <RadioButton x:Name="rdoNoMatch" Margin="4,2,2,2" IsChecked="True" Checked="rdoNoMatch_Checked" GroupName="match">Mo Matching</RadioButton>
+                <RadioButton x:Name="rdoWildcard" Margin="2,2,2,2" Checked="rdoWildcard_Checked" GroupName="match">Wildcard</RadioButton>
+                <RadioButton x:Name="rdoRegex" Margin="2,2,2,2" Checked="rdoRegex_Checked" GroupName="match">Regex</RadioButton>
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">

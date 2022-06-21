@@ -26,6 +26,7 @@ namespace tailwind
         public SessionSettings Settings { get; set; }
         public Timer RefreshTimer = new();
         private DateTime? lastFileModTime = null;
+        private bool settingsChanged = false;
         public MainWindow()
         {
             InitializeComponent();
@@ -46,8 +47,10 @@ namespace tailwind
         {
             if (Settings.File.Exists)
             {
-                if (lastFileModTime != Settings.File.LastWriteTime)
+                if (lastFileModTime != Settings.File.LastWriteTime && !settingsChanged)
                 {
+                    settingsChanged = false;
+
                     if (lastFileModTime == null)
                         lastFileModTime = Settings.File.LastWriteTime;
 
@@ -89,48 +92,49 @@ namespace tailwind
             }
         }
 
-        private void chkGrep_Checked(object sender, RoutedEventArgs e)
+        private void rdoWildcard_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
+        }
 
-            if(chkGrep.IsChecked == true)
-            {
-                chkRegex.IsEnabled = true;
-            }
-            else
-            {
-                chkRegex.IsEnabled = false;
-            }
+        private void rdoNoMatch_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!IsReady) return;
+        }
+
+        private void rdoRegex_Checked(object sender, RoutedEventArgs e)
+        {
+            if (!IsReady) return;
         }
 
         private void rdoHead_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
-            if (rdoHead.IsChecked == true)
-            {
-                txtLines.IsEnabled = true;
-            }
+            txtLines.IsEnabled = true;
+            Settings.Mode = FileMode.Head;
+            settingsChanged = true;
+            UpdateText();
         }
 
         private void rdoTail_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
-            if (rdoTail.IsChecked == true)
-            {
-                txtLines.IsEnabled = true;
-            }
+            txtLines.IsEnabled = true;
+            Settings.Mode = FileMode.Tail;
+            settingsChanged = true;
+            UpdateText();
         }
 
         private void rdoCat_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
 
-            if (rdoCat.IsChecked == true)
-            {
-                txtLines.IsEnabled = false;
-            }
+            txtLines.IsEnabled = false;
+            Settings.Mode = FileMode.Cat;
+            settingsChanged = true;
+            UpdateText();
         }
     }
 }
