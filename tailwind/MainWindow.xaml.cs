@@ -47,7 +47,7 @@ namespace tailwind
         {
             if (Settings.File.Exists)
             {
-                if (lastFileModTime != Settings.File.LastWriteTime && !settingsChanged)
+                if (lastFileModTime != Settings.File.LastWriteTime || settingsChanged)
                 {
                     settingsChanged = false;
 
