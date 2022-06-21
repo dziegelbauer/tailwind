@@ -51,7 +51,7 @@ namespace tailwind
                 {
                     settingsChanged = false;
 
-                    if (lastFileModTime == null)
+                    if (lastFileModTime == null || lastFileModTime != Settings.File.LastWriteTime)
                         lastFileModTime = Settings.File.LastWriteTime;
 
                     var FileContents = File.ReadAllLines(Settings.File.FullName).ToList();
