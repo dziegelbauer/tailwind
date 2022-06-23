@@ -24,7 +24,7 @@
                 <RadioButton x:Name="rdoCat" Margin="2,2,2,2" Checked="Cat_Checked" GroupName="mode">Cat</RadioButton>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
-                <RadioButton x:Name="rdoNoMatch" Margin="4,2,2,2" IsChecked="True" Checked="NoMatch_Checked" GroupName="match">Mo Matching</RadioButton>
+                <RadioButton x:Name="rdoNoMatch" Margin="4,2,2,2" IsChecked="True" Checked="NoMatch_Checked" GroupName="match">No Matching</RadioButton>
                 <RadioButton x:Name="rdoWildcard" Margin="2,2,2,2" Checked="Wildcard_Checked" GroupName="match">Wildcard</RadioButton>
                 <RadioButton x:Name="rdoRegex" Margin="2,2,2,2" Checked="Regex_Checked" GroupName="match">Regex</RadioButton>
             </StackPanel>
@@ -43,6 +43,6 @@
                 <TextBox x:Name="txtPattern" Margin="2,2,2,2" Width="300" IsEnabled="False"/>
             </StackPanel>
         </Grid>
-        <ListBox x:Name="lstData" Grid.Row="2" Margin="4,4,4,4"/>
+        <ListBox x:Name="lstData" Grid.Row="2" Margin="4,4,4,4" FontFamily="Consolas"/>
     </Grid>
 </Window>

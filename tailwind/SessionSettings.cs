@@ -23,10 +23,10 @@ namespace tailwind
     }
     public class SessionSettings : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         private string matchPattern = String.Empty;
-        private FileInfo file = default;
+        private FileInfo? file = default;
         private string windowTitle = String.Empty;
         private FileMode mode = FileMode.Tail;
         private int lineCount = 0;
@@ -45,7 +45,7 @@ namespace tailwind
             }
         }
 
-        public FileInfo File
+        public FileInfo? File
         {
             get { return file; }
             set

@@ -22,7 +22,7 @@ namespace tailwind
     /// </summary>
     public partial class MainWindow : Window
     {
-        private bool IsReady = false;
+        private readonly bool IsReady = false;
         public SessionSettings Settings { get; set; }
         public Timer RefreshTimer = new();
         private DateTime? lastFileModTime = null;
@@ -45,7 +45,7 @@ namespace tailwind
 
         public void UpdateText()
         {
-            if (Settings.File.Exists)
+            if (Settings.File != null && Settings.File.Exists)
             {
                 if (lastFileModTime != Settings.File.LastWriteTime || settingsChanged)
                 {
@@ -56,6 +56,8 @@ namespace tailwind
 
                     var FileContents = File.ReadAllLines(Settings.File.FullName).ToList();
                     Dispatcher.Invoke((Action)delegate () { lstData.Items.Clear(); });
+                    
+                    int hits = 0;
 
                     switch (Settings.Mode)
                     {
@@ -67,24 +69,39 @@ namespace tailwind
                             break;
                         case FileMode.Tail:
                             var lines = new Queue<string>();
-                            int hits = 0;
                             for (int i = (FileContents.Count - 1); (i >= 0) && (hits <= Settings.LineCount); i--)
                             {
                                 var line = FileContents[i];
-                                if (Settings.MatchMode == MatchMode.None)
+                                switch (Settings.MatchMode)
                                 {
-                                    lines.Enqueue(line);
-                                    hits++;
+                                    case MatchMode.None:
+                                        lines.Enqueue(line);
+                                        hits++;
+                                        break;
+                                    case MatchMode.Wildcard:
+                                        break;
+                                    case MatchMode.Regex:
+                                        break;
                                 }
                             }
                             while (lines.Count > 0)
                                 Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(lines.Dequeue()); });
                             break;
                         case FileMode.Head:
-                            for (int i = 0; (i < Settings.LineCount) && (i < FileContents.Count); i++)
+                            for (int i = 0; (hits <= Settings.LineCount) && (i < FileContents.Count); i++)
                             {
                                 var line = FileContents[i];
-                                Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                switch (Settings.MatchMode)
+                                {
+                                    case MatchMode.None:
+                                        Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                        hits++;
+                                        break;
+                                    case MatchMode.Wildcard:
+                                        break;
+                                    case MatchMode.Regex:
+                                        break;
+                                }
                             }
                             break;
                     }
