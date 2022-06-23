@@ -40,7 +40,7 @@
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Horizontal">
                 <Label Margin="2,2,2,2">Pattern:</Label>
-                <TextBox x:Name="txtPattern" Margin="2,2,2,2" Width="300" IsEnabled="False"/>
+                <TextBox x:Name="txtPattern" Margin="2,2,2,2" Width="300" IsEnabled="False" TextChanged="PatternTextChanged"/>
             </StackPanel>
         </Grid>
         <ListBox x:Name="lstData" Grid.Row="2" Margin="4,4,4,4" FontFamily="Consolas"/>

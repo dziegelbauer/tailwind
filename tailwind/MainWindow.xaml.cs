@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -27,6 +28,8 @@ namespace tailwind
         public Timer RefreshTimer = new();
         private DateTime? lastFileModTime = null;
         private bool settingsChanged = false;
+        private bool regexValid = false;
+        private Regex? matchingRegex = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -64,7 +67,17 @@ namespace tailwind
                         case FileMode.Cat:
                             foreach (var line in FileContents)
                             {
-                                Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                if(Settings.MatchMode == MatchMode.None)
+                                {
+                                    Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                }
+                                else
+                                {
+                                    if(matchingRegex != null && matchingRegex.IsMatch(line))
+                                    {
+                                        Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                    }
+                                }
                             }
                             break;
                         case FileMode.Tail:
@@ -79,8 +92,12 @@ namespace tailwind
                                         hits++;
                                         break;
                                     case MatchMode.Wildcard:
-                                        break;
                                     case MatchMode.Regex:
+                                        if(matchingRegex != null && matchingRegex.IsMatch(line))
+                                        {
+                                            lines.Enqueue(line);
+                                            hits++;
+                                        }
                                         break;
                                 }
                             }
@@ -98,8 +115,12 @@ namespace tailwind
                                         hits++;
                                         break;
                                     case MatchMode.Wildcard:
-                                        break;
                                     case MatchMode.Regex:
+                                        if(matchingRegex != null && matchingRegex.IsMatch(line))
+                                        {
+                                            Dispatcher.Invoke((Action)delegate () { lstData.Items.Add(line); });
+                                            hits++;
+                                        }
                                         break;
                                 }
                             }
@@ -112,16 +133,25 @@ namespace tailwind
         private void Wildcard_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
+
+            txtPattern.IsEnabled = true;
+            Settings.MatchMode = MatchMode.Wildcard;
         }
 
         private void NoMatch_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
+
+            txtPattern.IsEnabled = false;
+            Settings.MatchMode = MatchMode.None;
         }
 
         private void Regex_Checked(object sender, RoutedEventArgs e)
         {
             if (!IsReady) return;
+
+            txtPattern.IsEnabled = true;
+            Settings.MatchMode = MatchMode.Regex;
         }
 
         private void Head_Checked(object sender, RoutedEventArgs e)
@@ -152,6 +182,40 @@ namespace tailwind
             Settings.Mode = FileMode.Cat;
             settingsChanged = true;
             UpdateText();
+        }
+
+        private void PatternTextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(Settings.MatchMode == MatchMode.Regex)
+            {
+                try
+                {
+                    matchingRegex = new Regex(txtPattern.Text);
+                    txtPattern.Background = txtLines.Background;
+                    regexValid = true;
+                }
+                catch
+                {
+                    matchingRegex = null;
+                    txtPattern.Background = new SolidColorBrush(Color.FromRgb(255,128,128));
+                    regexValid = false;
+                }
+            }
+            else
+            {
+                try
+                {
+                    matchingRegex = new Regex(Regex.Escape(txtPattern.Text).Replace("\\?",".").Replace("\\*",".*"));
+                    txtPattern.Background = txtLines.Background;
+                    regexValid = true;
+                }
+                catch
+                {
+                    matchingRegex = null;
+                    txtPattern.Background = new SolidColorBrush(Color.FromRgb(255,128,128));
+                    regexValid = false;
+                }
+            }
         }
     }
 }
