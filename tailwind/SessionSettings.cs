@@ -76,7 +76,7 @@ namespace tailwind
                 mode = value;
                 if (PropertyChanged != null)
                     NotifyChange();
-                WindowTitle = $"tailwind - {mode.ToString()} {file?.Name}";
+                WindowTitle = $"tailwind - {mode} {file?.Name}";
             }
         }
 

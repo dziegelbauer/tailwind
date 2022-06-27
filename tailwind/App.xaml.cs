@@ -96,17 +96,33 @@ namespace tailwind
                     "t" => FileMode.Tail,
                     _ => FileMode.Cat,
                 };
+                switch(wnd.Settings.Mode)
+                {
+                    case FileMode.Cat:
+                        wnd.rdoCat.IsChecked = true;
+                        break;
+                    case FileMode.Head:
+                        wnd.rdoHead.IsChecked = true;
+                        break;
+                    case FileMode.Tail:
+                        wnd.rdoTail.IsChecked = true;
+                        break;
+                    default:
+                        wnd.rdoCat.IsChecked = false;
+                        break;
+                }
                 wnd.Settings.LineCount = Args.GetValueForOption<int>(lineOption);
                 wnd.Settings.RefreshTime = Args.GetValueForOption<int>(refreshOption);
                 wnd.Settings.MatchPattern = Args.GetValueForOption<string>(patternOption) ?? String.Empty;
                 
                 var matchmode = Args.GetValueForOption<string>(matchOption) ?? String.Empty;
+                
                 wnd.Settings.MatchMode = matchmode switch
                 {
                     "wildcard" => MatchMode.Wildcard,
                     "regex" => MatchMode.Regex,
                     _ => MatchMode.None
-                };
+                };                
             }
             else
             {
